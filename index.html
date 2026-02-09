@@ -38,6 +38,8 @@
             align-items: center;
             padding: 15px;
             overflow-x: hidden;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* CONTENEDOR PRINCIPAL RESPONSIVE */
@@ -57,7 +59,7 @@
             position: relative;
             overflow: hidden;
             animation: cardEntrance 0.8s ease-out;
-            display: block; /* Asegurar que sea block por defecto */
+            display: block;
         }
 
         .card.hidden {
@@ -238,7 +240,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* BOTONES - VERSIÓN CORREGIDA */
+        /* BOTONES - VERSIÓN CORREGIDA PARA MÓVILES */
         .buttons-container {
             position: relative;
             margin: 30px 0;
@@ -253,12 +255,15 @@
             border-radius: 20px;
             border: 3px solid var(--light-pink);
             overflow: visible;
+            touch-action: none;
         }
 
-        /* Todos los botones tendrán posición relativa por defecto */
         .buttons-container button {
             position: relative;
             z-index: 1;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
         }
 
         button {
@@ -311,7 +316,7 @@
             }
         }
 
-        /* BOTÓN NO CORREGIDO - NO MÁS SOBREPOSICIÓN */
+        /* BOTÓN NO - ESPECIAL PARA MÓVILES */
         .btn-no {
             background: linear-gradient(135deg, #cccccc, #999999);
             color: #666666;
@@ -320,8 +325,9 @@
             animation: noShake 0.5s infinite;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transform: none !important;
-            transition: transform 0.2s ease !important;
+            transition: transform 0.15s ease !important;
             margin: 0 !important;
+            touch-action: none;
         }
 
         @keyframes noShake {
@@ -329,6 +335,14 @@
             25% { transform: translate(5px, 5px) rotate(2deg); }
             50% { transform: translate(-5px, -5px) rotate(-2deg); }
             75% { transform: translate(3px, -3px) rotate(1deg); }
+        }
+
+        /* Animación específica para móviles */
+        @keyframes mobileNoShake {
+            0%, 100% { transform: translate(10px, 10px) rotate(3deg); }
+            25% { transform: translate(-10px, -10px) rotate(-3deg); }
+            50% { transform: translate(8px, -8px) rotate(2deg); }
+            75% { transform: translate(-8px, 8px) rotate(-2deg); }
         }
 
         /* BOTONES FALSOS */
@@ -534,9 +548,14 @@
             }
             
             button {
-                padding: 10px 15px;
+                padding: 14px 18px;
                 font-size: 0.9rem;
                 min-width: 120px;
+                min-height: 50px;
+            }
+            
+            .btn-no {
+                animation: mobileNoShake 0.4s infinite;
             }
         }
 
@@ -552,12 +571,14 @@
                 min-height: 200px;
                 padding: 15px;
                 gap: 12px;
+                touch-action: none;
             }
             
             .buttons-container button {
                 width: 100%;
                 max-width: 250px;
                 min-width: unset;
+                min-height: 55px;
             }
             
             /* Orden específico para móviles */
@@ -567,7 +588,7 @@
             
             .btn-no {
                 order: 2;
-                animation: mobileShake 0.4s infinite;
+                animation: mobileNoShake 0.4s infinite;
             }
             
             .btn-fake {
@@ -604,6 +625,10 @@
                 width: 180px;
                 height: 180px;
             }
+            
+            .btn-no {
+                animation: mobileNoShake 0.3s infinite;
+            }
         }
 
         /* ESCRITORIO (769px en adelante) */
@@ -619,6 +644,10 @@
             .img-frame {
                 width: 200px;
                 height: 200px;
+            }
+            
+            .btn-no {
+                animation: noShake 0.5s infinite;
             }
         }
 
@@ -651,6 +680,7 @@
             button {
                 padding: 10px 20px;
                 font-size: 0.9rem;
+                min-height: 45px;
             }
         }
 
@@ -674,7 +704,6 @@
         }
 
         
-
         /* ACCESIBILIDAD: REDUCIR ANIMACIONES */
         @media (prefers-reduced-motion: reduce) {
             .heart-float, .btn-no, .btn-yes, .heart-decoration i,
@@ -687,11 +716,12 @@
         /* MEJORAS PARA TACHS (dispositivos táctiles) */
         @media (hover: none) {
             button {
-                min-height: 44px;
+                min-height: 50px;
             }
             
             .btn-yes:active, .btn-no:active, .btn-fake:active {
-                transform: scale(0.98);
+                transform: scale(0.95);
+                opacity: 0.9;
             }
         }
     </style>
@@ -710,10 +740,10 @@
                 <i class="fas fa-heart"></i>
             </div>
             
-            <h1><i class="fas fa-heart"></i>  MI NIÑA BONITA <i class="fas fa-heart"></i></h1>
+            <h1><i class="fas fa-heart"></i> MI NIÑA BONITA <i class="fas fa-heart"></i></h1>
             
             <div class="message-box">
-                <p> Desde que llegaste a mi vida cada día es más especial. Eres la persona con la que quiero pasar el resto de mi vida. </p>
+                <p>Desde que llegaste a mi vida cada día es más especial. Eres la persona con la que quiero pasar el resto de mi vida.</p>
             </div>
 
             <!-- Contador de tiempo -->
@@ -765,7 +795,7 @@
                     <i class="fas fa-heart"></i> ¡SÍ! <i class="fas fa-heart"></i>
                 </button>
                 
-                <!-- Botón NO corregido - sin sobreposición -->
+                <!-- Botón NO corregido - funcionará en móviles -->
                 <button class="btn-no" id="no">
                     <i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>
                 </button>
@@ -778,7 +808,9 @@
 
             <!-- Advertencia -->
             <div class="warning">
-                
+                <i class=></i>
+               
+                <i class=></i>
             </div>
         </div>
 
@@ -790,11 +822,11 @@
                 <i class="fas fa-heart-circle"></i>
             </div>
             
-            <h1><i class=></i> 💖 SABIA QUE NO PODRIAS VIVIR SIN MI  😎  <></i></h1>
+            <h1><i class=></i> 💖 SABIA QUE NO PODRIAS VIVIR SIN MI  😎 <i class=></i></h1>
             
             <div class="message-box final-message">
                 <p>¡Mi amor! 💕</p>
-                <p>Me haces la persona más feliz del Mundo.</p>
+                <p>Me haces la persona más feliz del universo. Cada momento a tu lado es un regalo del cielo.</p>
                 <p class="love-promise">
                     <i class=></i>
                     Prometo amarte hoy, mañana y por toda la eternidad
@@ -871,6 +903,14 @@
         let isEscaping = false;
         let currentX = 0;
         let currentY = 0;
+        
+        // Variables específicas para móviles
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let touchStartTime = 0;
+        let isTouchMoving = false;
 
         // Variables para control de estado
         let liveTimerInterval = null;
@@ -879,7 +919,7 @@
         // Mensajes cuando intentan hacer clic en "No"
         const failMessages = [
             "Uy no, quieres dejar a Willow sin Papá",
-            "¡Hazme caso! ⚡",
+            "¡Hazme caso!",
             "Mi amor te atrapa 💘",
             "¡Que nooooo! 🛡️",
             "Intento #% fallido ❌",
@@ -910,7 +950,7 @@
             crearCorazonesIniciales();
             heartInterval = setInterval(crearCorazonAleatorio, 800);
             
-            // Configurar botón NO imposible (VERSIÓN CORREGIDA)
+            // Configurar botón NO imposible (VERSIÓN CORREGIDA PARA MÓVILES)
             hacerBotonNoImposible();
             
             // Configurar botón SÍ
@@ -922,7 +962,8 @@
             // Configurar botón de reinicio
             configurarBotonReinicio();
             
-            console.log("💖 Página de San Valentín cargada - Versión Corregida");
+            console.log("💖 Página de San Valentín cargada - Versión Corregida para Móviles");
+            console.log("Dispositivo táctil:", isTouchDevice);
         });
 
         // ============ MEJORAS DE SOPORTE TÁCTIL ============
@@ -931,22 +972,357 @@
                 // Aumentar área de toque en móviles
                 const botones = document.querySelectorAll('button');
                 botones.forEach(boton => {
-                    boton.style.minHeight = '48px';
-                    boton.style.padding = '14px 20px';
+                    boton.style.minHeight = '55px';
+                    boton.style.padding = '16px 20px';
+                    boton.style.fontSize = '1rem';
                 });
                 
                 // Mejorar feedback táctil
                 botones.forEach(boton => {
-                    boton.addEventListener('touchstart', function() {
+                    boton.addEventListener('touchstart', function(e) {
+                        e.preventDefault();
                         this.style.opacity = '0.8';
-                        this.style.transform = 'scale(0.98)';
+                        this.style.transform = 'scale(0.95)';
+                        // Vibrar si es posible
+                        if (navigator.vibrate) navigator.vibrate(30);
                     });
                     
                     boton.addEventListener('touchend', function() {
                         this.style.opacity = '1';
                         this.style.transform = 'scale(1)';
                     });
+                    
+                    boton.addEventListener('touchcancel', function() {
+                        this.style.opacity = '1';
+                        this.style.transform = 'scale(1)';
+                    });
                 });
+            }
+        }
+
+        // ============ BOTÓN "NO" IMPOSIBLE (VERSIÓN MÓVIL CORREGIDA) ============
+        function hacerBotonNoImposible() {
+            console.log("Configurando botón NO para dispositivo:", isTouchDevice ? "Móvil" : "PC");
+            
+            // Configurar tamaño y posición inicial
+            noBtn.style.position = 'relative';
+            noBtn.style.transform = 'translate(0, 0)';
+            noBtn.style.margin = '0';
+            
+            if (isTouchDevice) {
+                console.log("Configurando eventos táctiles para móvil");
+                // EVENTOS ESPECÍFICOS PARA MÓVILES
+                noBtn.addEventListener('touchstart', manejarToqueInicio, { passive: false });
+                noBtn.addEventListener('touchmove', manejarToqueMovimiento, { passive: false });
+                noBtn.addEventListener('touchend', manejarToqueFin, { passive: false });
+                noBtn.addEventListener('touchcancel', manejarToqueCancelado, { passive: false });
+                
+                // Agregar eventos para toques cerca del botón
+                document.addEventListener('touchmove', manejarToqueCercaDelBoton, { passive: false });
+            } else {
+                console.log("Configurando eventos de mouse para PC");
+                // EVENTOS PARA PC
+                noBtn.addEventListener('mouseover', manejarMouseNo);
+                noBtn.addEventListener('mousemove', manejarMouseNo);
+                noBtn.addEventListener('mouseenter', manejarMouseNo);
+            }
+            
+            // Evento de clic (casi imposible)
+            noBtn.addEventListener('click', manejarIntentoClicNo);
+            
+            // Escapar automáticamente
+            setInterval(moverAleatoriamenteSeguro, 3000);
+            
+            // Escapar con teclado
+            noBtn.addEventListener('focus', escaparDeFoco);
+        }
+
+        // ============ MANEJADORES PARA MÓVILES ============
+        function manejarToqueInicio(e) {
+            e.preventDefault();
+            if (!escapeMode || isEscaping) return;
+            
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchStartTime = Date.now();
+            isTouchMoving = false;
+            
+            // Mover el botón inmediatamente al tocar
+            setTimeout(() => {
+                if (!isTouchMoving) {
+                    escaparDelToque(touch);
+                }
+            }, 50);
+        }
+
+        function manejarToqueMovimiento(e) {
+            e.preventDefault();
+            if (!escapeMode) return;
+            
+            isTouchMoving = true;
+            const touch = e.touches[0];
+            touchEndX = touch.clientX;
+            touchEndY = touch.clientY;
+            
+            // Calcular distancia del movimiento
+            const distance = Math.sqrt(
+                Math.pow(touchEndX - touchStartX, 2) + 
+                Math.pow(touchEndY - touchStartY, 2)
+            );
+            
+            // Si el dedo se está moviendo cerca del botón, escapar
+            if (distance > 10) {
+                escaparDelToque(touch);
+            }
+        }
+
+        function manejarToqueFin(e) {
+            e.preventDefault();
+            isTouchMoving = false;
+            
+            // Verificar si fue un toque rápido (posible clic)
+            const touchTime = Date.now() - touchStartTime;
+            if (touchTime < 200) {
+                // Intentar mover el botón para evitar el clic
+                const touch = e.changedTouches[0];
+                escaparDelToque(touch);
+                
+                // Intentar manejar como clic (pero será difícil)
+                setTimeout(() => {
+                    if (Math.abs(touchEndX - touchStartX) < 5 && Math.abs(touchEndY - touchStartY) < 5) {
+                        manejarIntentoClicNo(e);
+                    }
+                }, 100);
+            }
+        }
+
+        function manejarToqueCancelado(e) {
+            e.preventDefault();
+            isTouchMoving = false;
+            noBtn.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        }
+
+        function manejarToqueCercaDelBoton(e) {
+            if (!escapeMode || isEscaping) return;
+            
+            const touch = e.touches[0];
+            const container = document.querySelector('.buttons-container');
+            if (!container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            const touchX = touch.clientX;
+            const touchY = touch.clientY;
+            
+            // Verificar si el toque está cerca del botón (dentro de 50px)
+            const distance = Math.sqrt(
+                Math.pow(touchX - (buttonRect.left + buttonRect.width/2), 2) +
+                Math.pow(touchY - (buttonRect.top + buttonRect.height/2), 2)
+            );
+            
+            if (distance < 80) {
+                escaparDelToque(touch);
+            }
+        }
+
+        function escaparDelToque(touch) {
+            if (!escapeMode || isEscaping) return;
+            
+            isEscaping = true;
+            
+            const container = document.querySelector('.buttons-container');
+            if (!container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            const touchX = touch.clientX - containerRect.left;
+            const touchY = touch.clientY - containerRect.top;
+            
+            // Calcular dirección opuesta al toque
+            const buttonCenterX = buttonRect.left - containerRect.left + buttonRect.width/2;
+            const buttonCenterY = buttonRect.top - containerRect.top + buttonRect.height/2;
+            
+            const angle = Math.atan2(buttonCenterY - touchY, buttonCenterX - touchX);
+            const distance = 70 + Math.random() * 30;
+            
+            let newX = Math.cos(angle) * distance;
+            let newY = Math.sin(angle) * distance;
+            
+            // Limitar dentro del contenedor
+            const maxX = containerRect.width - buttonRect.width - 10;
+            const maxY = containerRect.height - buttonRect.height - 10;
+            
+            newX = Math.max(10, Math.min(newX, maxX));
+            newY = Math.max(10, Math.min(newY, maxY));
+            
+            // Movimiento rápido para móviles
+            noBtn.style.transition = 'all 0.15s ease';
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            // Efecto visual
+            noBtn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.6)';
+            
+            // Vibrar
+            if (navigator.vibrate) navigator.vibrate([20, 20, 20]);
+            
+            setTimeout(() => {
+                noBtn.style.boxShadow = '';
+                isEscaping = false;
+            }, 200);
+            
+            currentX = newX;
+            currentY = newY;
+        }
+
+        // ============ MANEJADORES PARA PC ============
+        function manejarMouseNo(e) {
+            if (!escapeMode || isEscaping) return;
+            
+            isEscaping = true;
+            
+            const container = document.querySelector('.buttons-container');
+            if (!container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            // Posición relativa del mouse
+            const mouseX = e.clientX - containerRect.left;
+            const mouseY = e.clientY - containerRect.top;
+            
+            // Calcular nueva posición
+            const containerWidth = containerRect.width;
+            const containerHeight = containerRect.height;
+            const buttonWidth = buttonRect.width;
+            const buttonHeight = buttonRect.height;
+            
+            // Buscar posición segura
+            let newX, newY;
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            do {
+                newX = Math.random() * (containerWidth - buttonWidth - 20) + 10;
+                newY = Math.random() * (containerHeight - buttonHeight - 20) + 10;
+                
+                // Verificar distancia del mouse
+                const distanceToMouse = Math.sqrt(
+                    Math.pow(newX + buttonWidth/2 - mouseX, 2) +
+                    Math.pow(newY + buttonHeight/2 - mouseY, 2)
+                );
+                
+                attempts++;
+                
+                if (distanceToMouse > 80 || attempts >= maxAttempts) {
+                    break;
+                }
+            } while (attempts < maxAttempts);
+            
+            // Aplicar movimiento
+            noBtn.style.transition = 'all 0.3s ease';
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            // Efecto visual
+            noBtn.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.5)';
+            setTimeout(() => {
+                noBtn.style.boxShadow = '';
+                isEscaping = false;
+            }, 300);
+            
+            currentX = newX;
+            currentY = newY;
+        }
+
+        function moverAleatoriamenteSeguro() {
+            if (!escapeMode || isEscaping) return;
+            
+            const container = document.querySelector('.buttons-container');
+            if (!container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
+            
+            // Nueva posición aleatoria
+            const maxX = containerRect.width - buttonWidth - 20;
+            const maxY = containerRect.height - buttonHeight - 20;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            // Movimiento suave
+            noBtn.style.transition = 'all 0.8s ease';
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            currentX = newX;
+            currentY = newY;
+        }
+
+        function escaparDeFoco() {
+            if (!escapeMode) return;
+            
+            // Mover a posición aleatoria cuando se enfoca con tab
+            moverAleatoriamenteSeguro();
+            
+            // Quitar el foco inmediatamente
+            setTimeout(() => {
+                noBtn.blur();
+                if (yesBtn) yesBtn.focus();
+            }, 10);
+        }
+
+        function manejarIntentoClicNo(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            failedClicks++;
+            
+            // Cambiar texto
+            const originalText = noBtn.innerHTML;
+            const messageIndex = Math.min(failedClicks - 1, failMessages.length - 1);
+            let message = failMessages[messageIndex] || failMessages[failMessages.length - 1];
+            message = message.replace('%', failedClicks);
+            
+            noBtn.innerHTML = `<i class="fas fa-ban"></i> ${message}`;
+            noBtn.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
+            noBtn.style.color = 'white';
+            
+            // Efecto de rechazo
+            noBtn.style.animation = 'none';
+            setTimeout(() => noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite', 10);
+            
+            // Corazones de rechazo
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => crearCorazonEspecial('❌'), i * 100);
+            }
+            
+            // Actualizar advertencia
+            const warning = document.querySelector('.warning');
+    
+            warning.style.background = '#ffcccc';
+            warning.style.color = '#cc0000';
+            
+            // Restaurar después de 1.5 segundos
+            setTimeout(() => {
+                noBtn.innerHTML = originalText;
+                noBtn.style.background = '';
+                noBtn.style.color = '';
+                warning.style.background = '';
+                warning.style.color = '';
+            }, 1500);
+            
+            // Hacerlo más difícil
+            if (failedClicks > 5) {
+                maxSpeed = 25;
+                noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.3s infinite' : 'noShake 0.3s infinite';
+            }
+            
+            // Vibrar en móviles
+            if (isTouchDevice && navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
             }
         }
 
@@ -996,223 +1372,6 @@
             document.getElementById('months').textContent = meses;
             document.getElementById('days').textContent = dias;
             document.getElementById('totalDays').textContent = diffDias;
-        }
-
-        // ============ BOTÓN "NO" IMPOSIBLE (VERSIÓN CORREGIDA) ============
-        function hacerBotonNoImposible() {
-            // Configurar tamaño y posición inicial
-            noBtn.style.position = 'relative';
-            noBtn.style.transform = 'translate(0, 0)';
-            noBtn.style.margin = '0';
-            
-            // Eventos según el dispositivo
-            if (isTouchDevice) {
-                noBtn.addEventListener('touchstart', manejarToqueNo);
-                noBtn.addEventListener('touchmove', manejarToqueNo);
-            } else {
-                noBtn.addEventListener('mouseover', manejarMouseNo);
-                noBtn.addEventListener('mousemove', manejarMouseNo);
-                noBtn.addEventListener('mouseenter', manejarMouseNo);
-            }
-            
-            // Evento de clic (casi imposible)
-            noBtn.addEventListener('click', manejarIntentoClicNo);
-            
-            // Escapar automáticamente
-            setInterval(moverAleatoriamenteSeguro, 3000);
-            
-            // Escapar con teclado
-            noBtn.addEventListener('focus', escaparDeFoco);
-        }
-
-        function manejarMouseNo(e) {
-            if (!escapeMode || isEscaping) return;
-            
-            isEscaping = true;
-            
-            const container = document.querySelector('.buttons-container');
-            if (!container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const buttonRect = noBtn.getBoundingClientRect();
-            
-            // Posición relativa del mouse
-            const mouseX = e.clientX - containerRect.left;
-            const mouseY = e.clientY - containerRect.top;
-            
-            // Calcular nueva posición (manteniéndose dentro del contenedor)
-            const containerWidth = containerRect.width;
-            const containerHeight = containerRect.height;
-            const buttonWidth = buttonRect.width;
-            const buttonHeight = buttonRect.height;
-            
-            // Buscar posición segura
-            let newX, newY;
-            let attempts = 0;
-            const maxAttempts = 10;
-            
-            do {
-                newX = Math.random() * (containerWidth - buttonWidth - 20) + 10;
-                newY = Math.random() * (containerHeight - buttonHeight - 20) + 10;
-                
-                // Verificar distancia del mouse
-                const distanceToMouse = Math.sqrt(
-                    Math.pow(newX + buttonWidth/2 - mouseX, 2) +
-                    Math.pow(newY + buttonHeight/2 - mouseY, 2)
-                );
-                
-                attempts++;
-                
-                // Si está suficientemente lejos o muchos intentos, aceptar
-                if (distanceToMouse > 80 || attempts >= maxAttempts) {
-                    break;
-                }
-            } while (attempts < maxAttempts);
-            
-            // Aplicar movimiento
-            noBtn.style.transition = 'all 0.3s ease';
-            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            
-            // Efecto visual
-            noBtn.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.5)';
-            setTimeout(() => {
-                noBtn.style.boxShadow = '';
-                isEscaping = false;
-            }, 300);
-            
-            currentX = newX;
-            currentY = newY;
-        }
-
-        function manejarToqueNo(e) {
-            e.preventDefault();
-            if (!escapeMode || isEscaping) return;
-            
-            isEscaping = true;
-            
-            const touch = e.touches ? e.touches[0] : e.changedTouches[0];
-            const container = document.querySelector('.buttons-container');
-            
-            if (!container || !touch) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const mouseX = touch.clientX - containerRect.left;
-            const mouseY = touch.clientY - containerRect.top;
-            
-            // Mover en dirección opuesta al toque
-            const buttonRect = noBtn.getBoundingClientRect();
-            const buttonCenterX = buttonRect.left - containerRect.left + buttonRect.width/2;
-            const buttonCenterY = buttonRect.top - containerRect.top + buttonRect.height/2;
-            
-            const angle = Math.atan2(buttonCenterY - mouseY, buttonCenterX - mouseX);
-            const distance = 60;
-            
-            let newX = currentX + Math.cos(angle) * distance;
-            let newY = currentY + Math.sin(angle) * distance;
-            
-            // Limitar dentro del contenedor
-            const maxX = containerRect.width - buttonRect.width - 10;
-            const maxY = containerRect.height - buttonRect.height - 10;
-            
-            newX = Math.max(10, Math.min(newX, maxX));
-            newY = Math.max(10, Math.min(newY, maxY));
-            
-            // Aplicar movimiento
-            noBtn.style.transition = 'all 0.2s ease';
-            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            
-            // Vibrar si es posible
-            if (navigator.vibrate) navigator.vibrate([20]);
-            
-            setTimeout(() => {
-                isEscaping = false;
-            }, 200);
-            
-            currentX = newX;
-            currentY = newY;
-        }
-
-        function moverAleatoriamenteSeguro() {
-            if (!escapeMode || isEscaping) return;
-            
-            const container = document.querySelector('.buttons-container');
-            if (!container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const buttonWidth = noBtn.offsetWidth;
-            const buttonHeight = noBtn.offsetHeight;
-            
-            // Nueva posición aleatoria (dentro de límites)
-            const maxX = containerRect.width - buttonWidth - 20;
-            const maxY = containerRect.height - buttonHeight - 20;
-            
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
-            
-            // Movimiento suave
-            noBtn.style.transition = 'all 0.8s ease';
-            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            
-            currentX = newX;
-            currentY = newY;
-        }
-
-        function escaparDeFoco() {
-            if (!escapeMode) return;
-            
-            // Mover a posición aleatoria cuando se enfoca con tab
-            moverAleatoriamenteSeguro();
-            
-            // Quitar el foco inmediatamente
-            setTimeout(() => {
-                noBtn.blur();
-                if (yesBtn) yesBtn.focus();
-            }, 10);
-        }
-
-        function manejarIntentoClicNo(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            failedClicks++;
-            
-            // Cambiar texto
-            const originalText = noBtn.innerHTML;
-            const messageIndex = Math.min(failedClicks - 1, failMessages.length - 1);
-            let message = failMessages[messageIndex] || failMessages[failMessages.length - 1];
-            message = message.replace('%', failedClicks);
-            
-            noBtn.innerHTML = `<i class="fas fa-ban"></i> ${message}`;
-            noBtn.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
-            noBtn.style.color = 'white';
-            
-            // Efecto de rechazo
-            noBtn.style.animation = 'none';
-            setTimeout(() => noBtn.style.animation = 'noShake 0.5s infinite', 10);
-            
-            // Corazones de rechazo
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => crearCorazonEspecial('❌'), i * 100);
-            }
-            
-            // Actualizar advertencia
-            const warning = document.querySelector('.warning');
-            warning.style.color = '#cc0000';
-            
-            // Restaurar después de 1.5 segundos
-            setTimeout(() => {
-                noBtn.innerHTML = originalText;
-                noBtn.style.background = '';
-                noBtn.style.color = '';
-                warning.style.background = '';
-                warning.style.color = '';
-            }, 1500);
-            
-            // Hacerlo más difícil
-            if (failedClicks > 5) {
-                maxSpeed = 25;
-                noBtn.style.animation = 'noShake 0.3s infinite';
-            }
         }
 
         // ============ BOTÓN SÍ ============
@@ -1292,7 +1451,7 @@
                 noBtn.style.background = '';
                 noBtn.style.color = '';
                 noBtn.innerHTML = '<i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>';
-                noBtn.style.animation = 'noShake 0.5s infinite';
+                noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite';
                 
                 // Resetear botón SÍ
                 yesBtn.style.transform = '';
@@ -1311,6 +1470,7 @@
                 
                 // Resetear advertencia
                 const warning = document.querySelector('.warning');
+                warning.textContent = '⚠️ El botón "No" se defiende solo';
                 warning.style.background = '';
                 warning.style.color = '';
                 
@@ -1369,7 +1529,7 @@
                 
                 // Al hacer clic
                 btn.addEventListener('click', function() {
-                    btn.textContent = '¡Piensa en las Niñas! 💖';
+                    btn.textContent = '¡Dejaras a las niñas sin papá? :c';
                     btn.style.background = 'linear-gradient(135deg, #ff4d6d, #ff3366)';
                     btn.style.color = 'white';
                     
@@ -1460,4 +1620,3 @@
     </script>
 </body>
 </html>
-
