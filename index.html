@@ -1006,7 +1006,7 @@
             
             // Actualizar advertencia
             const warning = document.querySelector('.warning');
-            warning.textContent = `⚠️ ¡Intento #${failedClicks} fallido! El "No" se defiende`;
+           
             warning.style.background = '#ffcccc';
             warning.style.color = '#cc0000';
             
@@ -1016,8 +1016,6 @@
                 noBtn.style.background = '';
                 noBtn.style.color = '';
                 noBtn.style.animation = currentAnimation || (isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite');
-                
-                warning.textContent = '⚠️ El botón "No" se defiende solo';
                 warning.style.background = '';
                 warning.style.color = '';
             }, 1500);
@@ -1149,7 +1147,7 @@
             
             // Resetear advertencia
             const warning = document.querySelector('.warning');
-            warning.textContent = '⚠️ El botón "No" se defiende solo';
+         
             warning.style.background = '';
             warning.style.color = '';
             
@@ -1255,4 +1253,5 @@
     </script>
 </body>
 </html>
+
 
