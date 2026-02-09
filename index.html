@@ -240,7 +240,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* BOTONES - VERSIÓN CORREGIDA PARA MÓVILES */
+        /* BOTONES - VERSIÓN SIMPLIFICADA */
         .buttons-container {
             position: relative;
             margin: 30px 0;
@@ -254,45 +254,24 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             border: 3px solid var(--light-pink);
-            overflow: visible;
-            touch-action: none;
-        }
-
-        .buttons-container button {
-            position: relative;
-            z-index: 1;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            user-select: none;
         }
 
         button {
-            padding: clamp(12px, 3vw, 16px) clamp(25px, 5vw, 35px);
-            font-size: clamp(1rem, 3vw, 1.1rem);
+            padding: clamp(15px, 4vw, 18px) clamp(25px, 5vw, 35px);
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             transition: var(--transition);
             min-width: 140px;
+            min-height: 55px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        button:hover::before {
-            left: 100%;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
         }
 
         /* BOTÓN SÍ */
@@ -302,7 +281,6 @@
             z-index: 10;
             animation: yesPulse 2s infinite;
             box-shadow: 0 8px 25px rgba(255, 77, 109, 0.5);
-            position: relative;
         }
 
         @keyframes yesPulse {
@@ -316,18 +294,17 @@
             }
         }
 
-        /* BOTÓN NO - ESPECIAL PARA MÓVILES */
+        /* BOTÓN NO - SIMPLIFICADO */
         .btn-no {
             background: linear-gradient(135deg, #cccccc, #999999);
             color: #666666;
-            position: relative !important;
+            position: relative;
             z-index: 9;
             animation: noShake 0.5s infinite;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transform: none !important;
-            transition: transform 0.15s ease !important;
+            transition: all 0.3s ease !important;
             margin: 0 !important;
-            touch-action: none;
         }
 
         @keyframes noShake {
@@ -339,24 +316,18 @@
 
         /* Animación específica para móviles */
         @keyframes mobileNoShake {
-            0%, 100% { transform: translate(10px, 10px) rotate(3deg); }
-            25% { transform: translate(-10px, -10px) rotate(-3deg); }
-            50% { transform: translate(8px, -8px) rotate(2deg); }
-            75% { transform: translate(-8px, 8px) rotate(-2deg); }
+            0%, 100% { transform: translate(8px, 8px) rotate(3deg); }
+            25% { transform: translate(-8px, -8px) rotate(-3deg); }
+            50% { transform: translate(6px, -6px) rotate(2deg); }
+            75% { transform: translate(-6px, 6px) rotate(-2deg); }
         }
 
         /* BOTONES FALSOS */
         .btn-fake {
             background: linear-gradient(135deg, #ffd166, #ffb347);
             color: #333;
-            opacity: 0.8;
+            opacity: 0.9;
             z-index: 8;
-            position: relative;
-        }
-
-        .btn-fake:hover {
-            opacity: 1;
-            transform: translateY(-3px);
         }
 
         /* ADVERTENCIA */
@@ -509,55 +480,7 @@
             }
         }
 
-        /* Efecto hover solo para escritorio */
-        @media (hover: hover) {
-            .btn-yes:hover {
-                transform: scale(1.1);
-                background: linear-gradient(135deg, var(--dark-pink), #ff0066);
-            }
-            
-            .btn-fake:hover {
-                opacity: 1;
-                transform: translateY(-3px);
-            }
-        }
-
         /* ============ RESPONSIVE DESIGN ============ */
-
-        /* MÓVILES MUY PEQUEÑOS (hasta 360px) */
-        @media (max-width: 360px) {
-            .card {
-                padding: 15px 10px;
-                border-radius: 18px;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            h2 {
-                font-size: 1.2rem;
-            }
-            
-            .time-unit, .timer-unit {
-                min-width: 50px;
-            }
-            
-            .time-unit span, .timer-unit span {
-                font-size: 1.5rem;
-            }
-            
-            button {
-                padding: 14px 18px;
-                font-size: 0.9rem;
-                min-width: 120px;
-                min-height: 50px;
-            }
-            
-            .btn-no {
-                animation: mobileNoShake 0.4s infinite;
-            }
-        }
 
         /* MÓVILES PEQUEÑOS (hasta 480px) */
         @media (max-width: 480px) {
@@ -571,14 +494,15 @@
                 min-height: 200px;
                 padding: 15px;
                 gap: 12px;
-                touch-action: none;
             }
             
             .buttons-container button {
                 width: 100%;
                 max-width: 250px;
                 min-width: unset;
-                min-height: 55px;
+                min-height: 60px;
+                font-size: 1.1rem;
+                padding: 16px 20px;
             }
             
             /* Orden específico para móviles */
@@ -593,13 +517,6 @@
             
             .btn-fake {
                 order: 3;
-            }
-            
-            @keyframes mobileShake {
-                0%, 100% { transform: translateX(0) rotate(0deg); }
-                25% { transform: translateX(5px) rotate(2deg); }
-                50% { transform: translateX(-5px) rotate(-2deg); }
-                75% { transform: translateX(3px) rotate(1deg); }
             }
             
             .time-display, .timer-display {
@@ -646,82 +563,23 @@
                 height: 200px;
             }
             
-            .btn-no {
-                animation: noShake 0.5s infinite;
+            .btn-yes:hover {
+                transform: scale(1.1);
+                background: linear-gradient(135deg, var(--dark-pink), #ff0066);
+            }
+            
+            .btn-fake:hover {
+                opacity: 1;
+                transform: translateY(-3px);
             }
         }
 
-        /* MODO PAISAJE (pantallas horizontales) */
-        @media (max-height: 600px) and (orientation: landscape) {
-            body {
-                padding: 10px;
-                align-items: flex-start;
-                min-height: auto;
-            }
-            
-            .container {
-                margin: 15px auto;
-            }
-            
-            .card {
-                margin: 0 auto;
-            }
-            
-            .img-frame {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .buttons-container {
-                min-height: 100px;
-                padding: 15px;
-            }
-            
-            button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                min-height: 45px;
-            }
-        }
-
-        /* PANTALLAS MUY GRANDES */
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 550px;
-            }
-            
-            h1 {
-                font-size: 2.8rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .message-box p {
-                font-size: 1.2rem;
-            }
-        }
-
-        
         /* ACCESIBILIDAD: REDUCIR ANIMACIONES */
         @media (prefers-reduced-motion: reduce) {
             .heart-float, .btn-no, .btn-yes, .heart-decoration i,
             .celebration-animation i, .timer-unit span, .img-placeholder i {
                 animation: none;
                 transition: none;
-            }
-        }
-
-        /* MEJORAS PARA TACHS (dispositivos táctiles) */
-        @media (hover: none) {
-            button {
-                min-height: 50px;
-            }
-            
-            .btn-yes:active, .btn-no:active, .btn-fake:active {
-                transform: scale(0.95);
-                opacity: 0.9;
             }
         }
     </style>
@@ -740,7 +598,7 @@
                 <i class="fas fa-heart"></i>
             </div>
             
-            <h1><i class="fas fa-heart"></i> MI NIÑA BONITA <i class="fas fa-heart"></i></h1>
+            <h1><i class="fas fa-heart"></i> MI NIÑA BONITA  <i class="fas fa-heart"></i></h1>
             
             <div class="message-box">
                 <p>Desde que llegaste a mi vida cada día es más especial. Eres la persona con la que quiero pasar el resto de mi vida.</p>
@@ -789,18 +647,18 @@
                 </div>
             </div>
 
-            <!-- Botones - VERSIÓN CORREGIDA -->
+            <!-- Botones - VERSIÓN SIMPLIFICADA -->
             <div class="buttons-container">
                 <button class="btn-yes" id="yes">
                     <i class="fas fa-heart"></i> ¡SÍ! <i class="fas fa-heart"></i>
                 </button>
                 
-                <!-- Botón NO corregido - funcionará en móviles -->
+                <!-- Botón NO simplificado -->
                 <button class="btn-no" id="no">
                     <i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>
                 </button>
                 
-                <!-- Botones falsos para distraer -->
+                <!-- Botones falsos -->
                 <button class="btn-fake" id="fake1">Tal vez</button>
                 <button class="btn-fake" id="fake2">No sé</button>
                 <button class="btn-fake" id="fake3">Pregúntame después</button>
@@ -808,9 +666,7 @@
 
             <!-- Advertencia -->
             <div class="warning">
-                <i class=></i>
                
-                <i class=></i>
             </div>
         </div>
 
@@ -822,7 +678,7 @@
                 <i class="fas fa-heart-circle"></i>
             </div>
             
-            <h1><i class=></i> 💖 SABIA QUE NO PODRIAS VIVIR SIN MI  😎 <i class=></i></h1>
+            <h1><i class=></i> SABIA QUE NO PODRIAS VIVIR SIN MI  😎 <i class=></i></h1>
             
             <div class="message-box final-message">
                 <p>¡Mi amor! 💕</p>
@@ -868,7 +724,7 @@
                     </div>
                 </div>
                 <div class="timer-text">
-                    <i class=></i> 💕 Enamorado de mi niña de cabello azul 💕
+                    <i class="fas fa-clock"></i> De amor verdadero
                 </div>
             </div>
             
@@ -894,23 +750,10 @@
         const noviaContainer = document.getElementById('noviaContainer');
         const parejaContainer = document.getElementById('parejaContainer');
 
-        // Variables para el botón imposible (CORREGIDAS)
-        let escapeSpeed = 5;
-        let maxSpeed = 20;
+        // Variables para el botón NO
         let escapeMode = true;
         let failedClicks = 0;
         let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        let isEscaping = false;
-        let currentX = 0;
-        let currentY = 0;
-        
-        // Variables específicas para móviles
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchEndX = 0;
-        let touchEndY = 0;
-        let touchStartTime = 0;
-        let isTouchMoving = false;
 
         // Variables para control de estado
         let liveTimerInterval = null;
@@ -918,7 +761,7 @@
 
         // Mensajes cuando intentan hacer clic en "No"
         const failMessages = [
-            "Uy no, quieres dejar a Willow sin Papá",
+             "Uy no, quieres dejar a Willow sin Papá",
             "¡Hazme caso!",
             "Mi amor te atrapa 💘",
             "¡Que nooooo! 🛡️",
@@ -936,9 +779,6 @@
             mainCard.classList.remove('hidden');
             finalCard.classList.add('hidden');
             
-            // Mejorar soporte táctil
-            mejorarSoporteTactil();
-            
             // Cargar imágenes
             cargarImagenSegura('novia.png.png', noviaContainer, '💖');
             
@@ -950,381 +790,15 @@
             crearCorazonesIniciales();
             heartInterval = setInterval(crearCorazonAleatorio, 800);
             
-            // Configurar botón NO imposible (VERSIÓN CORREGIDA PARA MÓVILES)
-            hacerBotonNoImposible();
-            
-            // Configurar botón SÍ
+            // Configurar botones
             configurarBotonSi();
-            
-            // Configurar botones falsos
+            configurarBotonNoSimple();
             configurarBotonesFalsos();
-            
-            // Configurar botón de reinicio
             configurarBotonReinicio();
             
-            console.log("💖 Página de San Valentín cargada - Versión Corregida para Móviles");
-            console.log("Dispositivo táctil:", isTouchDevice);
+            console.log("💖 Página de San Valentín cargada - Versión Simplificada");
+            console.log("Es dispositivo táctil:", isTouchDevice);
         });
-
-        // ============ MEJORAS DE SOPORTE TÁCTIL ============
-        function mejorarSoporteTactil() {
-            if (isTouchDevice) {
-                // Aumentar área de toque en móviles
-                const botones = document.querySelectorAll('button');
-                botones.forEach(boton => {
-                    boton.style.minHeight = '55px';
-                    boton.style.padding = '16px 20px';
-                    boton.style.fontSize = '1rem';
-                });
-                
-                // Mejorar feedback táctil
-                botones.forEach(boton => {
-                    boton.addEventListener('touchstart', function(e) {
-                        e.preventDefault();
-                        this.style.opacity = '0.8';
-                        this.style.transform = 'scale(0.95)';
-                        // Vibrar si es posible
-                        if (navigator.vibrate) navigator.vibrate(30);
-                    });
-                    
-                    boton.addEventListener('touchend', function() {
-                        this.style.opacity = '1';
-                        this.style.transform = 'scale(1)';
-                    });
-                    
-                    boton.addEventListener('touchcancel', function() {
-                        this.style.opacity = '1';
-                        this.style.transform = 'scale(1)';
-                    });
-                });
-            }
-        }
-
-        // ============ BOTÓN "NO" IMPOSIBLE (VERSIÓN MÓVIL CORREGIDA) ============
-        function hacerBotonNoImposible() {
-            console.log("Configurando botón NO para dispositivo:", isTouchDevice ? "Móvil" : "PC");
-            
-            // Configurar tamaño y posición inicial
-            noBtn.style.position = 'relative';
-            noBtn.style.transform = 'translate(0, 0)';
-            noBtn.style.margin = '0';
-            
-            if (isTouchDevice) {
-                console.log("Configurando eventos táctiles para móvil");
-                // EVENTOS ESPECÍFICOS PARA MÓVILES
-                noBtn.addEventListener('touchstart', manejarToqueInicio, { passive: false });
-                noBtn.addEventListener('touchmove', manejarToqueMovimiento, { passive: false });
-                noBtn.addEventListener('touchend', manejarToqueFin, { passive: false });
-                noBtn.addEventListener('touchcancel', manejarToqueCancelado, { passive: false });
-                
-                // Agregar eventos para toques cerca del botón
-                document.addEventListener('touchmove', manejarToqueCercaDelBoton, { passive: false });
-            } else {
-                console.log("Configurando eventos de mouse para PC");
-                // EVENTOS PARA PC
-                noBtn.addEventListener('mouseover', manejarMouseNo);
-                noBtn.addEventListener('mousemove', manejarMouseNo);
-                noBtn.addEventListener('mouseenter', manejarMouseNo);
-            }
-            
-            // Evento de clic (casi imposible)
-            noBtn.addEventListener('click', manejarIntentoClicNo);
-            
-            // Escapar automáticamente
-            setInterval(moverAleatoriamenteSeguro, 3000);
-            
-            // Escapar con teclado
-            noBtn.addEventListener('focus', escaparDeFoco);
-        }
-
-        // ============ MANEJADORES PARA MÓVILES ============
-        function manejarToqueInicio(e) {
-            e.preventDefault();
-            if (!escapeMode || isEscaping) return;
-            
-            const touch = e.touches[0];
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-            touchStartTime = Date.now();
-            isTouchMoving = false;
-            
-            // Mover el botón inmediatamente al tocar
-            setTimeout(() => {
-                if (!isTouchMoving) {
-                    escaparDelToque(touch);
-                }
-            }, 50);
-        }
-
-        function manejarToqueMovimiento(e) {
-            e.preventDefault();
-            if (!escapeMode) return;
-            
-            isTouchMoving = true;
-            const touch = e.touches[0];
-            touchEndX = touch.clientX;
-            touchEndY = touch.clientY;
-            
-            // Calcular distancia del movimiento
-            const distance = Math.sqrt(
-                Math.pow(touchEndX - touchStartX, 2) + 
-                Math.pow(touchEndY - touchStartY, 2)
-            );
-            
-            // Si el dedo se está moviendo cerca del botón, escapar
-            if (distance > 10) {
-                escaparDelToque(touch);
-            }
-        }
-
-        function manejarToqueFin(e) {
-            e.preventDefault();
-            isTouchMoving = false;
-            
-            // Verificar si fue un toque rápido (posible clic)
-            const touchTime = Date.now() - touchStartTime;
-            if (touchTime < 200) {
-                // Intentar mover el botón para evitar el clic
-                const touch = e.changedTouches[0];
-                escaparDelToque(touch);
-                
-                // Intentar manejar como clic (pero será difícil)
-                setTimeout(() => {
-                    if (Math.abs(touchEndX - touchStartX) < 5 && Math.abs(touchEndY - touchStartY) < 5) {
-                        manejarIntentoClicNo(e);
-                    }
-                }, 100);
-            }
-        }
-
-        function manejarToqueCancelado(e) {
-            e.preventDefault();
-            isTouchMoving = false;
-            noBtn.style.transform = `translate(${currentX}px, ${currentY}px)`;
-        }
-
-        function manejarToqueCercaDelBoton(e) {
-            if (!escapeMode || isEscaping) return;
-            
-            const touch = e.touches[0];
-            const container = document.querySelector('.buttons-container');
-            if (!container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const buttonRect = noBtn.getBoundingClientRect();
-            
-            const touchX = touch.clientX;
-            const touchY = touch.clientY;
-            
-            // Verificar si el toque está cerca del botón (dentro de 50px)
-            const distance = Math.sqrt(
-                Math.pow(touchX - (buttonRect.left + buttonRect.width/2), 2) +
-                Math.pow(touchY - (buttonRect.top + buttonRect.height/2), 2)
-            );
-            
-            if (distance < 80) {
-                escaparDelToque(touch);
-            }
-        }
-
-        function escaparDelToque(touch) {
-            if (!escapeMode || isEscaping) return;
-            
-            isEscaping = true;
-            
-            const container = document.querySelector('.buttons-container');
-            if (!container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const buttonRect = noBtn.getBoundingClientRect();
-            
-            const touchX = touch.clientX - containerRect.left;
-            const touchY = touch.clientY - containerRect.top;
-            
-            // Calcular dirección opuesta al toque
-            const buttonCenterX = buttonRect.left - containerRect.left + buttonRect.width/2;
-            const buttonCenterY = buttonRect.top - containerRect.top + buttonRect.height/2;
-            
-            const angle = Math.atan2(buttonCenterY - touchY, buttonCenterX - touchX);
-            const distance = 70 + Math.random() * 30;
-            
-            let newX = Math.cos(angle) * distance;
-            let newY = Math.sin(angle) * distance;
-            
-            // Limitar dentro del contenedor
-            const maxX = containerRect.width - buttonRect.width - 10;
-            const maxY = containerRect.height - buttonRect.height - 10;
-            
-            newX = Math.max(10, Math.min(newX, maxX));
-            newY = Math.max(10, Math.min(newY, maxY));
-            
-            // Movimiento rápido para móviles
-            noBtn.style.transition = 'all 0.15s ease';
-            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            
-            // Efecto visual
-            noBtn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.6)';
-            
-            // Vibrar
-            if (navigator.vibrate) navigator.vibrate([20, 20, 20]);
-            
-            setTimeout(() => {
-                noBtn.style.boxShadow = '';
-                isEscaping = false;
-            }, 200);
-            
-            currentX = newX;
-            currentY = newY;
-        }
-
-        // ============ MANEJADORES PARA PC ============
-        function manejarMouseNo(e) {
-            if (!escapeMode || isEscaping) return;
-            
-            isEscaping = true;
-            
-            const container = document.querySelector('.buttons-container');
-            if (!container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const buttonRect = noBtn.getBoundingClientRect();
-            
-            // Posición relativa del mouse
-            const mouseX = e.clientX - containerRect.left;
-            const mouseY = e.clientY - containerRect.top;
-            
-            // Calcular nueva posición
-            const containerWidth = containerRect.width;
-            const containerHeight = containerRect.height;
-            const buttonWidth = buttonRect.width;
-            const buttonHeight = buttonRect.height;
-            
-            // Buscar posición segura
-            let newX, newY;
-            let attempts = 0;
-            const maxAttempts = 10;
-            
-            do {
-                newX = Math.random() * (containerWidth - buttonWidth - 20) + 10;
-                newY = Math.random() * (containerHeight - buttonHeight - 20) + 10;
-                
-                // Verificar distancia del mouse
-                const distanceToMouse = Math.sqrt(
-                    Math.pow(newX + buttonWidth/2 - mouseX, 2) +
-                    Math.pow(newY + buttonHeight/2 - mouseY, 2)
-                );
-                
-                attempts++;
-                
-                if (distanceToMouse > 80 || attempts >= maxAttempts) {
-                    break;
-                }
-            } while (attempts < maxAttempts);
-            
-            // Aplicar movimiento
-            noBtn.style.transition = 'all 0.3s ease';
-            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            
-            // Efecto visual
-            noBtn.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.5)';
-            setTimeout(() => {
-                noBtn.style.boxShadow = '';
-                isEscaping = false;
-            }, 300);
-            
-            currentX = newX;
-            currentY = newY;
-        }
-
-        function moverAleatoriamenteSeguro() {
-            if (!escapeMode || isEscaping) return;
-            
-            const container = document.querySelector('.buttons-container');
-            if (!container) return;
-            
-            const containerRect = container.getBoundingClientRect();
-            const buttonWidth = noBtn.offsetWidth;
-            const buttonHeight = noBtn.offsetHeight;
-            
-            // Nueva posición aleatoria
-            const maxX = containerRect.width - buttonWidth - 20;
-            const maxY = containerRect.height - buttonHeight - 20;
-            
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
-            
-            // Movimiento suave
-            noBtn.style.transition = 'all 0.8s ease';
-            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-            
-            currentX = newX;
-            currentY = newY;
-        }
-
-        function escaparDeFoco() {
-            if (!escapeMode) return;
-            
-            // Mover a posición aleatoria cuando se enfoca con tab
-            moverAleatoriamenteSeguro();
-            
-            // Quitar el foco inmediatamente
-            setTimeout(() => {
-                noBtn.blur();
-                if (yesBtn) yesBtn.focus();
-            }, 10);
-        }
-
-        function manejarIntentoClicNo(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            failedClicks++;
-            
-            // Cambiar texto
-            const originalText = noBtn.innerHTML;
-            const messageIndex = Math.min(failedClicks - 1, failMessages.length - 1);
-            let message = failMessages[messageIndex] || failMessages[failMessages.length - 1];
-            message = message.replace('%', failedClicks);
-            
-            noBtn.innerHTML = `<i class="fas fa-ban"></i> ${message}`;
-            noBtn.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
-            noBtn.style.color = 'white';
-            
-            // Efecto de rechazo
-            noBtn.style.animation = 'none';
-            setTimeout(() => noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite', 10);
-            
-            // Corazones de rechazo
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => crearCorazonEspecial('❌'), i * 100);
-            }
-            
-            // Actualizar advertencia
-            const warning = document.querySelector('.warning');
-    
-            warning.style.background = '#ffcccc';
-            warning.style.color = '#cc0000';
-            
-            // Restaurar después de 1.5 segundos
-            setTimeout(() => {
-                noBtn.innerHTML = originalText;
-                noBtn.style.background = '';
-                noBtn.style.color = '';
-                warning.style.background = '';
-                warning.style.color = '';
-            }, 1500);
-            
-            // Hacerlo más difícil
-            if (failedClicks > 5) {
-                maxSpeed = 25;
-                noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.3s infinite' : 'noShake 0.3s infinite';
-            }
-            
-            // Vibrar en móviles
-            if (isTouchDevice && navigator.vibrate) {
-                navigator.vibrate([100, 50, 100]);
-            }
-        }
 
         // ============ FUNCIONES DE IMÁGENES ============
         function cargarImagenSegura(src, container, fallbackEmoji) {
@@ -1376,7 +850,13 @@
 
         // ============ BOTÓN SÍ ============
         function configurarBotonSi() {
-            yesBtn.addEventListener('click', function() {
+            // Para ambos: PC y móviles
+            yesBtn.addEventListener('click', function(e) {
+                if (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+                
                 escapeMode = false;
                 
                 // Animación
@@ -1389,12 +869,174 @@
                 }
                 
                 // Mostrar pantalla final
-                setTimeout(mostrarPantallaFinal, 1200);
+                setTimeout(mostrarPantallaFinal, 800);
+            });
+            
+            // También para toques en móviles
+            yesBtn.addEventListener('touchstart', function(e) {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                this.style.opacity = '0.9';
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            yesBtn.addEventListener('touchend', function(e) {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                this.style.opacity = '1';
+                this.style.transform = 'scale(1)';
+                // Disparar el clic después de un pequeño delay
+                setTimeout(() => {
+                    const clickEvent = new Event('click');
+                    this.dispatchEvent(clickEvent);
+                }, 50);
             });
         }
 
+        // ============ BOTÓN NO SIMPLIFICADO ============
+        function configurarBotonNoSimple() {
+            // Sistema simple: se mueve aleatoriamente cuando intentas hacer clic
+            
+            // Para clics de mouse
+            noBtn.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                moverBotonNoAleatorio();
+                manejarIntentoClicNo();
+            });
+            
+            // Para toques en móviles
+            noBtn.addEventListener('touchstart', function(e) {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                e.stopPropagation();
+                
+                // Mover inmediatamente
+                moverBotonNoAleatorio();
+                
+                // Vibrar
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                // Manejar como intento de clic después de un breve delay
+                setTimeout(() => {
+                    manejarIntentoClicNo();
+                }, 100);
+                
+                // Feedback visual
+                this.style.opacity = '0.8';
+                this.style.transform += ' scale(0.95)';
+            });
+            
+            noBtn.addEventListener('touchend', function(e) {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                this.style.opacity = '1';
+                this.style.transform = this.style.transform.replace(' scale(0.95)', '');
+            });
+            
+            // También mover aleatoriamente periódicamente
+            setInterval(() => {
+                if (escapeMode && Math.random() > 0.7) {
+                    moverBotonNoAleatorio();
+                }
+            }, 2000);
+        }
+
+        function moverBotonNoAleatorio() {
+            if (!escapeMode) return;
+            
+            const container = document.querySelector('.buttons-container');
+            if (!container) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
+            
+            // Calcular nueva posición aleatoria
+            const maxX = containerRect.width - buttonWidth - 20;
+            const maxY = containerRect.height - buttonHeight - 20;
+            
+            // Asegurar que no esté en el mismo lugar
+            let newX, newY;
+            do {
+                newX = Math.random() * maxX;
+                newY = Math.random() * maxY;
+            } while (Math.abs(newX) < 20 && Math.abs(newY) < 20);
+            
+            // Aplicar movimiento con transición rápida
+            noBtn.style.transition = 'all 0.3s ease';
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            // Efecto visual
+            noBtn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.5)';
+            setTimeout(() => {
+                noBtn.style.boxShadow = '';
+            }, 300);
+        }
+
+        function manejarIntentoClicNo() {
+            if (!escapeMode) return;
+            
+            failedClicks++;
+            
+            // Cambiar texto temporalmente
+            const originalText = noBtn.innerHTML;
+            const messageIndex = Math.min(failedClicks - 1, failMessages.length - 1);
+            let message = failMessages[messageIndex] || failMessages[failMessages.length - 1];
+            message = message.replace('%', failedClicks);
+            
+            noBtn.innerHTML = `<i class="fas fa-ban"></i> ${message}`;
+            noBtn.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
+            noBtn.style.color = 'white';
+            
+            // Cambiar animación temporalmente
+            const currentAnimation = noBtn.style.animation;
+            noBtn.style.animation = 'none';
+            
+            // Corazones de rechazo
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => crearCorazonEspecial('❌'), i * 100);
+            }
+            
+            // Actualizar advertencia
+            const warning = document.querySelector('.warning');
+            warning.textContent = `⚠️ ¡Intento #${failedClicks} fallido! El "No" se defiende`;
+            warning.style.background = '#ffcccc';
+            warning.style.color = '#cc0000';
+            
+            // Restaurar después de 1.5 segundos
+            setTimeout(() => {
+                noBtn.innerHTML = originalText;
+                noBtn.style.background = '';
+                noBtn.style.color = '';
+                noBtn.style.animation = currentAnimation || (isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite');
+                
+                warning.textContent = '⚠️ El botón "No" se defiende solo';
+                warning.style.background = '';
+                warning.style.color = '';
+            }, 1500);
+            
+            // Hacerlo más difícil
+            if (failedClicks > 3) {
+                // Aumentar frecuencia de movimiento
+                clearInterval(noBtn.moveInterval);
+                noBtn.moveInterval = setInterval(() => {
+                    if (escapeMode && Math.random() > 0.5) {
+                        moverBotonNoAleatorio();
+                    }
+                }, 1500);
+            }
+        }
+
+        // ============ PANTALLA FINAL ============
         function mostrarPantallaFinal() {
-            // Ocultar tarjeta principal con clase
+            // Ocultar tarjeta principal
             mainCard.classList.add('hidden');
             
             // Mostrar tarjeta final
@@ -1426,72 +1068,6 @@
             liveTimerInterval = setInterval(actualizarContadorEnVivo, 1000);
         }
 
-        // ============ BOTÓN REINICIO ============
-        function configurarBotonReinicio() {
-            restartBtn.addEventListener('click', function() {
-                // Limpiar intervalos
-                if (liveTimerInterval) {
-                    clearInterval(liveTimerInterval);
-                    liveTimerInterval = null;
-                }
-                
-                if (heartInterval) {
-                    clearInterval(heartInterval);
-                    heartInterval = null;
-                }
-                
-                // Resetear variables
-                escapeMode = true;
-                failedClicks = 0;
-                currentX = 0;
-                currentY = 0;
-                
-                // Resetear botón NO
-                noBtn.style.transform = 'translate(0, 0)';
-                noBtn.style.background = '';
-                noBtn.style.color = '';
-                noBtn.innerHTML = '<i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>';
-                noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite';
-                
-                // Resetear botón SÍ
-                yesBtn.style.transform = '';
-                yesBtn.style.background = '';
-                yesBtn.style.animation = 'yesPulse 2s infinite';
-                
-                // Resetear botones falsos
-                const textosOriginales = ['Tal vez', 'No sé', 'Pregúntame después'];
-                fakeButtons.forEach((btn, index) => {
-                    if (btn) {
-                        btn.textContent = textosOriginales[index];
-                        btn.style.background = '';
-                        btn.style.color = '';
-                    }
-                });
-                
-                // Resetear advertencia
-                const warning = document.querySelector('.warning');
-               
-                warning.style.background = '';
-                warning.style.color = '';
-                
-                // Ocultar tarjeta final
-                finalCard.classList.add('hidden');
-                
-                // Mostrar tarjeta principal
-                mainCard.classList.remove('hidden');
-                mainCard.style.display = 'block';
-                
-                // Reiniciar corazones
-                crearCorazonesIniciales();
-                heartInterval = setInterval(crearCorazonAleatorio, 800);
-                
-                // Reconfigurar eventos del botón NO
-                hacerBotonNoImposible();
-                
-                console.log("🔄 Página reiniciada correctamente");
-            });
-        }
-
         function actualizarContadorEnVivo() {
             const hoy = new Date();
             const diffTiempo = hoy.getTime() - inicio.getTime();
@@ -1508,6 +1084,89 @@
             document.getElementById('liveSeconds').textContent = diffSegundos;
         }
 
+        // ============ BOTÓN REINICIO ============
+        function configurarBotonReinicio() {
+            restartBtn.addEventListener('click', function() {
+                reiniciarPagina();
+            });
+            
+            // También para toques
+            restartBtn.addEventListener('touchstart', function(e) {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                this.style.opacity = '0.9';
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            restartBtn.addEventListener('touchend', function(e) {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                this.style.opacity = '1';
+                this.style.transform = 'scale(1)';
+                reiniciarPagina();
+            });
+        }
+
+        function reiniciarPagina() {
+            // Limpiar intervalos
+            if (liveTimerInterval) {
+                clearInterval(liveTimerInterval);
+                liveTimerInterval = null;
+            }
+            
+            if (heartInterval) {
+                clearInterval(heartInterval);
+                heartInterval = null;
+            }
+            
+            // Resetear variables
+            escapeMode = true;
+            failedClicks = 0;
+            
+            // Resetear botón NO
+            noBtn.style.transform = 'translate(0, 0)';
+            noBtn.style.background = '';
+            noBtn.style.color = '';
+            noBtn.innerHTML = '<i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>';
+            noBtn.style.animation = isTouchDevice ? 'mobileNoShake 0.4s infinite' : 'noShake 0.5s infinite';
+            
+            // Resetear botón SÍ
+            yesBtn.style.transform = '';
+            yesBtn.style.background = '';
+            yesBtn.style.animation = 'yesPulse 2s infinite';
+            
+            // Resetear botones falsos
+            const textosOriginales = ['Tal vez', 'No sé', 'Pregúntame después'];
+            fakeButtons.forEach((btn, index) => {
+                if (btn) {
+                    btn.textContent = textosOriginales[index];
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }
+            });
+            
+            // Resetear advertencia
+            const warning = document.querySelector('.warning');
+            warning.textContent = '⚠️ El botón "No" se defiende solo';
+            warning.style.background = '';
+            warning.style.color = '';
+            
+            // Ocultar tarjeta final
+            finalCard.classList.add('hidden');
+            
+            // Mostrar tarjeta principal
+            mainCard.classList.remove('hidden');
+            mainCard.style.display = 'block';
+            
+            // Reiniciar corazones
+            crearCorazonesIniciales();
+            heartInterval = setInterval(crearCorazonAleatorio, 800);
+            
+            console.log("🔄 Página reiniciada correctamente");
+        }
+
         // ============ BOTONES FALSOS ============
         function configurarBotonesFalsos() {
             const textosOriginales = ['Tal vez', 'No sé', 'Pregúntame después'];
@@ -1515,21 +1174,9 @@
             fakeButtons.forEach((btn, index) => {
                 if (!btn) return;
                 
-                // Movimiento ligero
-                btn.addEventListener('mouseover', function() {
-                    if (isTouchDevice) return;
-                    const x = (Math.random() - 0.5) * 15;
-                    const y = (Math.random() - 0.5) * 15;
-                    btn.style.transform = `translate(${x}px, ${y}px)`;
-                });
-                
-                btn.addEventListener('mouseout', function() {
-                    btn.style.transform = 'translate(0, 0)';
-                });
-                
-                // Al hacer clic
+                // Configurar clic
                 btn.addEventListener('click', function() {
-                    btn.textContent = '¡Dejaras a las niñas sin papá? :c';
+                    btn.textContent = '¡Mejor elige SÍ! 💖';
                     btn.style.background = 'linear-gradient(135deg, #ff4d6d, #ff3366)';
                     btn.style.color = 'white';
                     
@@ -1538,6 +1185,26 @@
                         btn.style.background = '';
                         btn.style.color = '';
                     }, 1500);
+                });
+                
+                // Configurar toques para móviles
+                btn.addEventListener('touchstart', function(e) {
+                    if (e.cancelable) {
+                        e.preventDefault();
+                    }
+                    this.style.opacity = '0.9';
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                btn.addEventListener('touchend', function(e) {
+                    if (e.cancelable) {
+                        e.preventDefault();
+                    }
+                    this.style.opacity = '1';
+                    this.style.transform = 'scale(1)';
+                    // Disparar clic
+                    const clickEvent = new Event('click');
+                    this.dispatchEvent(clickEvent);
                 });
             });
         }
@@ -1585,38 +1252,6 @@
                 }
             }, 4000);
         }
-
-        // ============ MEJORAS RESPONSIVE ============
-        window.addEventListener('resize', function() {
-            // Resetear posición si hay problemas
-            if (noBtn.style.transform.includes('translate') && 
-                (noBtn.offsetLeft + noBtn.offsetWidth > document.querySelector('.buttons-container').offsetWidth)) {
-                noBtn.style.transform = 'translate(0, 0)';
-                currentX = 0;
-                currentY = 0;
-            }
-        });
-
-        // Prevenir salida accidental
-        window.addEventListener('beforeunload', function(e) {
-            if (!mainCard.classList.contains('hidden')) {
-                e.preventDefault();
-                e.returnValue = '¿Seguro que quieres salir? ¡Aún no has dicho que SÍ! 💖';
-            }
-        });
-
-        // Soporte para teclado
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Tab' && document.activeElement === noBtn) {
-                e.preventDefault();
-                escaparDeFoco();
-            }
-            
-            // Acceso rápido a SÍ con Enter
-            if (e.key === 'Enter' && document.activeElement !== noBtn) {
-                yesBtn.click();
-            }
-        });
     </script>
 </body>
 </html>
