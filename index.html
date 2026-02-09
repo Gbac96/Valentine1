@@ -57,6 +57,11 @@
             position: relative;
             overflow: hidden;
             animation: cardEntrance 0.8s ease-out;
+            display: block; /* Asegurar que sea block por defecto */
+        }
+
+        .card.hidden {
+            display: none !important;
         }
 
         @keyframes cardEntrance {
@@ -601,26 +606,6 @@
             }
         }
 
-        /* TABLETS EN MODO RETRATO */
-        @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
-            .container {
-                max-width: 600px;
-            }
-            
-            .card {
-                padding: 30px;
-            }
-            
-            .img-frame {
-                width: 220px;
-                height: 220px;
-            }
-            
-            .buttons-container {
-                min-height: 180px;
-            }
-        }
-
         /* ESCRITORIO (769px en adelante) */
         @media (min-width: 769px) {
             .container {
@@ -669,22 +654,6 @@
             }
         }
 
-        /* ORIENTACIÓN PAISAJE ESPECÍFICA */
-        @media (orientation: landscape) and (max-height: 500px) {
-            .container {
-                max-width: 90%;
-                display: flex;
-                flex-direction: row;
-                gap: 20px;
-            }
-            
-            .card {
-                flex: 1;
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-        }
-
         /* PANTALLAS MUY GRANDES */
         @media (min-width: 1200px) {
             .container {
@@ -704,6 +673,7 @@
             }
         }
 
+        
 
         /* ACCESIBILIDAD: REDUCIR ANIMACIONES */
         @media (prefers-reduced-motion: reduce) {
@@ -724,21 +694,6 @@
                 transform: scale(0.98);
             }
         }
-
-        /* Soporte para navegadores antiguos */
-        @supports not (font-size: clamp(1rem, 3vw, 2rem)) {
-            @media (max-width: 480px) {
-                .time-unit span {
-                    font-size: 1.5rem;
-                }
-            }
-            
-            @media (min-width: 1200px) {
-                .time-unit span {
-                    font-size: 2.5rem;
-                }
-            }
-        }
     </style>
 </head>
 <body>
@@ -755,10 +710,10 @@
                 <i class="fas fa-heart"></i>
             </div>
             
-            <h1><i class="fas fa-heart"></i> MI NIÑA BONITA <i class="fas fa-heart"></i></h1>
+            <h1><i class="fas fa-heart"></i>  MI NIÑA BONITA <i class="fas fa-heart"></i></h1>
             
             <div class="message-box">
-                <p>Desde que llegaste a mi vida cada día es más especial. Eres la persona con la que quiero pasar el resto de mi vida.</p>
+                <p> Desde que llegaste a mi vida cada día es más especial. Eres la persona con la que quiero pasar el resto de mi vida. </p>
             </div>
 
             <!-- Contador de tiempo -->
@@ -821,23 +776,27 @@
                 <button class="btn-fake" id="fake3">Pregúntame después</button>
             </div>
 
-           
+            <!-- Advertencia -->
+            <div class="warning">
+                
+            </div>
+        </div>
 
         <!-- Pantalla final (oculta inicialmente) -->
-        <div class="card final-screen" id="finalCard" style="display: none;">
+        <div class="card final-screen hidden" id="finalCard">
             <div class="celebration-animation">
                 <i class="fas fa-heart-circle"></i>
                 <i class="fas fa-heart-circle"></i>
                 <i class="fas fa-heart-circle"></i>
             </div>
             
-            <h1><i class="fas fa-heart-crack"></i> ¡EL MEJOR SÍ DEL MUNDO! <i class="fas fa-heart-crack"></i></h1>
+            <h1><i class="fas fa-heart-crack"></i> SABIA QUE NO PODRIAS VIVIR SIN MI  😎  <i class="fas fa-heart-crack"></i></h1>
             
             <div class="message-box final-message">
                 <p>¡Mi amor! 💕</p>
-                <p>Me haces la persona más feliz del universo. Cada momento a tu lado es un regalo del cielo.</p>
+                <p>Me haces la persona más feliz del Mundo.</p>
                 <p class="love-promise">
-                    <i class="fas fa-heart"></i>
+                    <i class=></i>
                     Prometo amarte hoy, mañana y por toda la eternidad
                     <i class="fas fa-heart"></i>
                 </p>
@@ -877,13 +836,13 @@
                     </div>
                 </div>
                 <div class="timer-text">
-                    <i class=></i>💕 Enamorado de mi niña de cabello azul 💕
+                    <i class=></i> 💕 Enamorado de mi niña de cabello azul 💕
                 </div>
             </div>
             
             <!-- Botón para volver -->
             <button class="btn-restart" id="restart">
-                <i class="fas fa-redo"></i> inicio
+                <i class="fas fa-redo"></i> Ver nuestro amor otra vez
             </button>
         </div>
     </div>
@@ -913,6 +872,10 @@
         let currentX = 0;
         let currentY = 0;
 
+        // Variables para control de estado
+        let liveTimerInterval = null;
+        let heartInterval = null;
+
         // Mensajes cuando intentan hacer clic en "No"
         const failMessages = [
             "Uy no, quieres dejar a Willow sin Papá",
@@ -929,6 +892,10 @@
 
         // ============ INICIALIZACIÓN ============
         document.addEventListener('DOMContentLoaded', function() {
+            // Asegurar que las tarjetas estén en estado correcto
+            mainCard.classList.remove('hidden');
+            finalCard.classList.add('hidden');
+            
             // Mejorar soporte táctil
             mejorarSoporteTactil();
             
@@ -941,7 +908,7 @@
             
             // Crear corazones iniciales
             crearCorazonesIniciales();
-            setInterval(crearCorazonAleatorio, 800);
+            heartInterval = setInterval(crearCorazonAleatorio, 800);
             
             // Configurar botón NO imposible (VERSIÓN CORREGIDA)
             hacerBotonNoImposible();
@@ -951,6 +918,9 @@
             
             // Configurar botones falsos
             configurarBotonesFalsos();
+            
+            // Configurar botón de reinicio
+            configurarBotonReinicio();
             
             console.log("💖 Página de San Valentín cargada - Versión Corregida");
         });
@@ -1227,8 +1197,6 @@
             
             // Actualizar advertencia
             const warning = document.querySelector('.warning');
-            warning.textContent = `⚠️ ¡Intento #${failedClicks} fallido! El "No" se defiende`;
-            warning.style.background = '#ffcccc';
             warning.style.color = '#cc0000';
             
             // Restaurar después de 1.5 segundos
@@ -1236,7 +1204,6 @@
                 noBtn.innerHTML = originalText;
                 noBtn.style.background = '';
                 noBtn.style.color = '';
-                warning.textContent = '⚠️ El botón "No" se defiende solo';
                 warning.style.background = '';
                 warning.style.color = '';
             }, 1500);
@@ -1268,25 +1235,101 @@
         }
 
         function mostrarPantallaFinal() {
-            mainCard.style.display = 'none';
+            // Ocultar tarjeta principal con clase
+            mainCard.classList.add('hidden');
+            
+            // Mostrar tarjeta final
+            finalCard.classList.remove('hidden');
             finalCard.style.display = 'block';
+            
+            // Reiniciar animación
+            finalCard.style.animation = 'none';
+            setTimeout(() => {
+                finalCard.style.animation = 'celebrate 0.8s ease-out';
+            }, 10);
             
             // Cargar imagen de pareja
             cargarImagenSegura('pareja.png.png', parejaContainer, '👫');
             
+            // Detener corazones anteriores
+            if (heartInterval) {
+                clearInterval(heartInterval);
+            }
+            
+            // Más corazones para celebración
+            heartInterval = setInterval(crearCorazonAleatorio, 400);
+            
             // Iniciar contador en vivo
             actualizarContadorEnVivo();
-            setInterval(actualizarContadorEnVivo, 1000);
-            
-            // Más corazones
-            setInterval(crearCorazonAleatorio, 400);
-            
-            // Configurar botón reinicio
-            if (restartBtn) {
-                restartBtn.addEventListener('click', function() {
-                    location.reload();
-                });
+            if (liveTimerInterval) {
+                clearInterval(liveTimerInterval);
             }
+            liveTimerInterval = setInterval(actualizarContadorEnVivo, 1000);
+        }
+
+        // ============ BOTÓN REINICIO ============
+        function configurarBotonReinicio() {
+            restartBtn.addEventListener('click', function() {
+                // Limpiar intervalos
+                if (liveTimerInterval) {
+                    clearInterval(liveTimerInterval);
+                    liveTimerInterval = null;
+                }
+                
+                if (heartInterval) {
+                    clearInterval(heartInterval);
+                    heartInterval = null;
+                }
+                
+                // Resetear variables
+                escapeMode = true;
+                failedClicks = 0;
+                currentX = 0;
+                currentY = 0;
+                
+                // Resetear botón NO
+                noBtn.style.transform = 'translate(0, 0)';
+                noBtn.style.background = '';
+                noBtn.style.color = '';
+                noBtn.innerHTML = '<i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>';
+                noBtn.style.animation = 'noShake 0.5s infinite';
+                
+                // Resetear botón SÍ
+                yesBtn.style.transform = '';
+                yesBtn.style.background = '';
+                yesBtn.style.animation = 'yesPulse 2s infinite';
+                
+                // Resetear botones falsos
+                const textosOriginales = ['Tal vez', 'No sé', 'Pregúntame después'];
+                fakeButtons.forEach((btn, index) => {
+                    if (btn) {
+                        btn.textContent = textosOriginales[index];
+                        btn.style.background = '';
+                        btn.style.color = '';
+                    }
+                });
+                
+                // Resetear advertencia
+                const warning = document.querySelector('.warning');
+                warning.style.background = '';
+                warning.style.color = '';
+                
+                // Ocultar tarjeta final
+                finalCard.classList.add('hidden');
+                
+                // Mostrar tarjeta principal
+                mainCard.classList.remove('hidden');
+                mainCard.style.display = 'block';
+                
+                // Reiniciar corazones
+                crearCorazonesIniciales();
+                heartInterval = setInterval(crearCorazonAleatorio, 800);
+                
+                // Reconfigurar eventos del botón NO
+                hacerBotonNoImposible();
+                
+                console.log("🔄 Página reiniciada correctamente");
+            });
         }
 
         function actualizarContadorEnVivo() {
@@ -1326,7 +1369,7 @@
                 
                 // Al hacer clic
                 btn.addEventListener('click', function() {
-                    btn.textContent = '¡Mejor elige SÍ! 💖';
+                    btn.textContent = '¡Pinesa en las Niñas! 💖';
                     btn.style.background = 'linear-gradient(135deg, #ff4d6d, #ff3366)';
                     btn.style.color = 'white';
                     
@@ -1396,7 +1439,7 @@
 
         // Prevenir salida accidental
         window.addEventListener('beforeunload', function(e) {
-            if (mainCard.style.display !== 'none') {
+            if (!mainCard.classList.contains('hidden')) {
                 e.preventDefault();
                 e.returnValue = '¿Seguro que quieres salir? ¡Aún no has dicho que SÍ! 💖';
             }
