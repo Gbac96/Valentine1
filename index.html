@@ -20,7 +20,7 @@
             --light-pink: #ffe6ec;
             --dark-pink: #ff1e4d;
             --white: #ffffff;
-            --gray: #ffffff;
+            --gray: #333333;
             --light-gray: #f5f5f5;
             --shadow: 0 10px 30px rgba(255, 77, 109, 0.25);
             --transition: all 0.3s ease;
@@ -109,7 +109,7 @@
 
         /* MENSAJES */
         .message-box {
-            background: linear-gradient(135deg, var(--light-pink), #f40752);
+            background: linear-gradient(135deg, var(--light-pink), #fff5f7);
             border-radius: 18px;
             padding: 20px;
             margin: 20px 0;
@@ -198,6 +198,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .img-frame:hover img {
+            transform: scale(1.05);
         }
 
         .image-label {
@@ -228,7 +233,7 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* BOTONES - EL "NO" ES IMPOSIBLE */
+        /* BOTONES - VERSIÓN CORREGIDA */
         .buttons-container {
             position: relative;
             margin: 30px 0;
@@ -242,6 +247,13 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             border: 3px solid var(--light-pink);
+            overflow: visible;
+        }
+
+        /* Todos los botones tendrán posición relativa por defecto */
+        .buttons-container button {
+            position: relative;
+            z-index: 1;
         }
 
         button {
@@ -280,6 +292,7 @@
             z-index: 10;
             animation: yesPulse 2s infinite;
             box-shadow: 0 8px 25px rgba(255, 77, 109, 0.5);
+            position: relative;
         }
 
         @keyframes yesPulse {
@@ -293,19 +306,17 @@
             }
         }
 
-        .btn-yes:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, var(--dark-pink), #ff0066);
-        }
-
-        /* BOTÓN NO (IMPOSIBLE DE HACER CLIC) */
+        /* BOTÓN NO CORREGIDO - NO MÁS SOBREPOSICIÓN */
         .btn-no {
             background: linear-gradient(135deg, #cccccc, #999999);
             color: #666666;
-            position: absolute !important;
+            position: relative !important;
             z-index: 9;
             animation: noShake 0.5s infinite;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: none !important;
+            transition: transform 0.2s ease !important;
+            margin: 0 !important;
         }
 
         @keyframes noShake {
@@ -321,6 +332,7 @@
             color: #333;
             opacity: 0.8;
             z-index: 8;
+            position: relative;
         }
 
         .btn-fake:hover {
@@ -478,7 +490,50 @@
             }
         }
 
+        /* Efecto hover solo para escritorio */
+        @media (hover: hover) {
+            .btn-yes:hover {
+                transform: scale(1.1);
+                background: linear-gradient(135deg, var(--dark-pink), #ff0066);
+            }
+            
+            .btn-fake:hover {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
         /* ============ RESPONSIVE DESIGN ============ */
+
+        /* MÓVILES MUY PEQUEÑOS (hasta 360px) */
+        @media (max-width: 360px) {
+            .card {
+                padding: 15px 10px;
+                border-radius: 18px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            .time-unit, .timer-unit {
+                min-width: 50px;
+            }
+            
+            .time-unit span, .timer-unit span {
+                font-size: 1.5rem;
+            }
+            
+            button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                min-width: 120px;
+            }
+        }
 
         /* MÓVILES PEQUEÑOS (hasta 480px) */
         @media (max-width: 480px) {
@@ -491,21 +546,34 @@
                 flex-direction: column;
                 min-height: 200px;
                 padding: 15px;
+                gap: 12px;
             }
             
-            button {
+            .buttons-container button {
                 width: 100%;
                 max-width: 250px;
                 min-width: unset;
             }
             
+            /* Orden específico para móviles */
+            .btn-yes {
+                order: 1;
+            }
+            
             .btn-no {
+                order: 2;
                 animation: mobileShake 0.4s infinite;
             }
             
+            .btn-fake {
+                order: 3;
+            }
+            
             @keyframes mobileShake {
-                0%, 100% { transform: translate(8px, 8px) rotate(3deg); }
-                50% { transform: translate(-8px, -8px) rotate(-3deg); }
+                0%, 100% { transform: translateX(0) rotate(0deg); }
+                25% { transform: translateX(5px) rotate(2deg); }
+                50% { transform: translateX(-5px) rotate(-2deg); }
+                75% { transform: translateX(3px) rotate(1deg); }
             }
             
             .time-display, .timer-display {
@@ -530,6 +598,26 @@
             .img-frame {
                 width: 180px;
                 height: 180px;
+            }
+        }
+
+        /* TABLETS EN MODO RETRATO */
+        @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+            .container {
+                max-width: 600px;
+            }
+            
+            .card {
+                padding: 30px;
+            }
+            
+            .img-frame {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .buttons-container {
+                min-height: 180px;
             }
         }
 
@@ -581,6 +669,22 @@
             }
         }
 
+        /* ORIENTACIÓN PAISAJE ESPECÍFICA */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .container {
+                max-width: 90%;
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
+            
+            .card {
+                flex: 1;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+
         /* PANTALLAS MUY GRANDES */
         @media (min-width: 1200px) {
             .container {
@@ -600,7 +704,6 @@
             }
         }
 
-        
 
         /* ACCESIBILIDAD: REDUCIR ANIMACIONES */
         @media (prefers-reduced-motion: reduce) {
@@ -617,12 +720,23 @@
                 min-height: 44px;
             }
             
-            .btn-yes:hover, .btn-no:hover, .btn-fake:hover {
-                transform: none;
-            }
-            
             .btn-yes:active, .btn-no:active, .btn-fake:active {
                 transform: scale(0.98);
+            }
+        }
+
+        /* Soporte para navegadores antiguos */
+        @supports not (font-size: clamp(1rem, 3vw, 2rem)) {
+            @media (max-width: 480px) {
+                .time-unit span {
+                    font-size: 1.5rem;
+                }
+            }
+            
+            @media (min-width: 1200px) {
+                .time-unit span {
+                    font-size: 2.5rem;
+                }
             }
         }
     </style>
@@ -641,10 +755,10 @@
                 <i class="fas fa-heart"></i>
             </div>
             
-            <h1><i class="fas fa-heart"></i> Hola mi amor <i class="fas fa-heart"></i></h1>
+            <h1><i class="fas fa-heart"></i> MI NIÑA BONITA <i class="fas fa-heart"></i></h1>
             
             <div class="message-box">
-                <p>Desde que llegaste, cada día es más especial. Eres la persona que ilumina mis días, Te amo mi niña bonita</p>
+                <p>Desde que llegaste a mi vida cada día es más especial. Eres la persona con la que quiero pasar el resto de mi vida.</p>
             </div>
 
             <!-- Contador de tiempo -->
@@ -665,7 +779,7 @@
                 </div>
                 <div class="total-days">
                     <i class="fas fa-heart-circle"></i>
-                    <span id="totalDays">0</span> días amandote 
+                    <span id="totalDays">0</span> días amandote
                 </div>
             </div>
 
@@ -690,13 +804,13 @@
                 </div>
             </div>
 
-            <!-- Botones - EL "NO" ES IMPOSIBLE -->
+            <!-- Botones - VERSIÓN CORREGIDA -->
             <div class="buttons-container">
                 <button class="btn-yes" id="yes">
                     <i class="fas fa-heart"></i> ¡SÍ! <i class="fas fa-heart"></i>
                 </button>
                 
-                <!-- Este botón es IMPOSIBLE de hacer clic -->
+                <!-- Botón NO corregido - sin sobreposición -->
                 <button class="btn-no" id="no">
                     <i class="fas fa-sad-cry"></i> No <i class="fas fa-sad-cry"></i>
                 </button>
@@ -708,7 +822,6 @@
             </div>
 
            
-        </div>
 
         <!-- Pantalla final (oculta inicialmente) -->
         <div class="card final-screen" id="finalCard" style="display: none;">
@@ -718,13 +831,13 @@
                 <i class="fas fa-heart-circle"></i>
             </div>
             
-            <h1><i class=></i> ¡LO SABÍA, NO PUEDES VIVIR SIN MI 😎! <i class=></i></h1>
+            <h1><i class="fas fa-heart-crack"></i> ¡EL MEJOR SÍ DEL MUNDO! <i class="fas fa-heart-crack"></i></h1>
             
             <div class="message-box final-message">
                 <p>¡Mi amor! 💕</p>
                 <p>Me haces la persona más feliz del universo. Cada momento a tu lado es un regalo del cielo.</p>
                 <p class="love-promise">
-                    <i class=></i>
+                    <i class="fas fa-heart"></i>
                     Prometo amarte hoy, mañana y por toda la eternidad
                     <i class="fas fa-heart"></i>
                 </p>
@@ -770,7 +883,7 @@
             
             <!-- Botón para volver -->
             <button class="btn-restart" id="restart">
-                <i class="fas fa-redo"></i> Regresar
+                <i class="fas fa-redo"></i> inicio
             </button>
         </div>
     </div>
@@ -790,12 +903,15 @@
         const noviaContainer = document.getElementById('noviaContainer');
         const parejaContainer = document.getElementById('parejaContainer');
 
-        // Variables para el botón imposible
+        // Variables para el botón imposible (CORREGIDAS)
         let escapeSpeed = 5;
         let maxSpeed = 20;
         let escapeMode = true;
         let failedClicks = 0;
         let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        let isEscaping = false;
+        let currentX = 0;
+        let currentY = 0;
 
         // Mensajes cuando intentan hacer clic en "No"
         const failMessages = [
@@ -813,6 +929,9 @@
 
         // ============ INICIALIZACIÓN ============
         document.addEventListener('DOMContentLoaded', function() {
+            // Mejorar soporte táctil
+            mejorarSoporteTactil();
+            
             // Cargar imágenes
             cargarImagenSegura('novia.png.png', noviaContainer, '💖');
             
@@ -824,7 +943,7 @@
             crearCorazonesIniciales();
             setInterval(crearCorazonAleatorio, 800);
             
-            // Configurar botón NO imposible
+            // Configurar botón NO imposible (VERSIÓN CORREGIDA)
             hacerBotonNoImposible();
             
             // Configurar botón SÍ
@@ -833,14 +952,40 @@
             // Configurar botones falsos
             configurarBotonesFalsos();
             
-            console.log("💖 Página de San Valentín cargada");
+            console.log("💖 Página de San Valentín cargada - Versión Corregida");
         });
+
+        // ============ MEJORAS DE SOPORTE TÁCTIL ============
+        function mejorarSoporteTactil() {
+            if (isTouchDevice) {
+                // Aumentar área de toque en móviles
+                const botones = document.querySelectorAll('button');
+                botones.forEach(boton => {
+                    boton.style.minHeight = '48px';
+                    boton.style.padding = '14px 20px';
+                });
+                
+                // Mejorar feedback táctil
+                botones.forEach(boton => {
+                    boton.addEventListener('touchstart', function() {
+                        this.style.opacity = '0.8';
+                        this.style.transform = 'scale(0.98)';
+                    });
+                    
+                    boton.addEventListener('touchend', function() {
+                        this.style.opacity = '1';
+                        this.style.transform = 'scale(1)';
+                    });
+                });
+            }
+        }
 
         // ============ FUNCIONES DE IMÁGENES ============
         function cargarImagenSegura(src, container, fallbackEmoji) {
             const img = new Image();
             img.onload = function() {
                 container.innerHTML = `<img src="${src}" alt="Imagen especial" style="width:100%;height:100%;object-fit:cover;">`;
+                container.classList.add('loaded');
             };
             img.onerror = function() {
                 container.innerHTML = `
@@ -849,6 +994,7 @@
                         <p style="margin-top: 10px; font-size: 0.9em;">Nuestra foto</p>
                     </div>
                 `;
+                container.classList.add('loaded');
             };
             img.src = src;
         }
@@ -882,30 +1028,37 @@
             document.getElementById('totalDays').textContent = diffDias;
         }
 
-        // ============ BOTÓN "NO" IMPOSIBLE ============
+        // ============ BOTÓN "NO" IMPOSIBLE (VERSIÓN CORREGIDA) ============
         function hacerBotonNoImposible() {
+            // Configurar tamaño y posición inicial
+            noBtn.style.position = 'relative';
+            noBtn.style.transform = 'translate(0, 0)';
+            noBtn.style.margin = '0';
+            
             // Eventos según el dispositivo
             if (isTouchDevice) {
-                noBtn.addEventListener('touchstart', escapeUltraRapidoTouch);
-                noBtn.addEventListener('touchend', escapeUltraRapidoTouch);
+                noBtn.addEventListener('touchstart', manejarToqueNo);
+                noBtn.addEventListener('touchmove', manejarToqueNo);
             } else {
-                noBtn.addEventListener('mouseover', escapeUltraRapido);
-                noBtn.addEventListener('mouseenter', escapeUltraRapido);
-                noBtn.addEventListener('mousemove', escapeUltraRapido);
+                noBtn.addEventListener('mouseover', manejarMouseNo);
+                noBtn.addEventListener('mousemove', manejarMouseNo);
+                noBtn.addEventListener('mouseenter', manejarMouseNo);
             }
             
             // Evento de clic (casi imposible)
             noBtn.addEventListener('click', manejarIntentoClicNo);
             
             // Escapar automáticamente
-            setInterval(moverAleatoriamente, 2000);
+            setInterval(moverAleatoriamenteSeguro, 3000);
             
             // Escapar con teclado
-            noBtn.addEventListener('focus', escapeUltraRapido);
+            noBtn.addEventListener('focus', escaparDeFoco);
         }
 
-        function escapeUltraRapido(e) {
-            if (!escapeMode) return;
+        function manejarMouseNo(e) {
+            if (!escapeMode || isEscaping) return;
+            
+            isEscaping = true;
             
             const container = document.querySelector('.buttons-container');
             if (!container) return;
@@ -913,64 +1066,104 @@
             const containerRect = container.getBoundingClientRect();
             const buttonRect = noBtn.getBoundingClientRect();
             
-            // Calcular posición del cursor
+            // Posición relativa del mouse
             const mouseX = e.clientX - containerRect.left;
             const mouseY = e.clientY - containerRect.top;
             
-            // Si está cerca, ESCAPAR
-            const distance = Math.sqrt(
-                Math.pow(mouseX - (buttonRect.left - containerRect.left + buttonRect.width/2), 2) +
-                Math.pow(mouseY - (buttonRect.top - containerRect.top + buttonRect.height/2), 2)
-            );
+            // Calcular nueva posición (manteniéndose dentro del contenedor)
+            const containerWidth = containerRect.width;
+            const containerHeight = containerRect.height;
+            const buttonWidth = buttonRect.width;
+            const buttonHeight = buttonRect.height;
             
-            if (distance < 100) {
-                // Calcular dirección opuesta
-                const angle = Math.atan2(
-                    buttonRect.top - containerRect.top + buttonRect.height/2 - mouseY,
-                    buttonRect.left - containerRect.left + buttonRect.width/2 - mouseX
+            // Buscar posición segura
+            let newX, newY;
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            do {
+                newX = Math.random() * (containerWidth - buttonWidth - 20) + 10;
+                newY = Math.random() * (containerHeight - buttonHeight - 20) + 10;
+                
+                // Verificar distancia del mouse
+                const distanceToMouse = Math.sqrt(
+                    Math.pow(newX + buttonWidth/2 - mouseX, 2) +
+                    Math.pow(newY + buttonHeight/2 - mouseY, 2)
                 );
                 
-                // Nueva posición
-                const escapeDistance = 80 + Math.random() * 40;
-                let newX = (buttonRect.left - containerRect.left) + Math.cos(angle) * escapeDistance;
-                let newY = (buttonRect.top - containerRect.top) + Math.sin(angle) * escapeDistance;
+                attempts++;
                 
-                // Mantener dentro del contenedor
-                const maxX = containerRect.width - buttonRect.width - 10;
-                const maxY = containerRect.height - buttonRect.height - 10;
-                newX = Math.max(10, Math.min(newX, maxX));
-                newY = Math.max(10, Math.min(newY, maxY));
-                
-                // Aplicar movimiento ultra rápido
-                noBtn.style.transition = `all ${0.05 / escapeSpeed}s linear`;
-                noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
-                
-                // Efecto visual
-                noBtn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.7)';
-                setTimeout(() => noBtn.style.boxShadow = '', 200);
-                
-                // Aumentar velocidad
-                if (escapeSpeed < maxSpeed) escapeSpeed += 0.3;
-            }
+                // Si está suficientemente lejos o muchos intentos, aceptar
+                if (distanceToMouse > 80 || attempts >= maxAttempts) {
+                    break;
+                }
+            } while (attempts < maxAttempts);
+            
+            // Aplicar movimiento
+            noBtn.style.transition = 'all 0.3s ease';
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            // Efecto visual
+            noBtn.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.5)';
+            setTimeout(() => {
+                noBtn.style.boxShadow = '';
+                isEscaping = false;
+            }, 300);
+            
+            currentX = newX;
+            currentY = newY;
         }
 
-        function escapeUltraRapidoTouch(e) {
-            if (!escapeMode) return;
+        function manejarToqueNo(e) {
+            e.preventDefault();
+            if (!escapeMode || isEscaping) return;
+            
+            isEscaping = true;
             
             const touch = e.touches ? e.touches[0] : e.changedTouches[0];
-            const fakeEvent = {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            };
+            const container = document.querySelector('.buttons-container');
             
-            escapeUltraRapido(fakeEvent);
+            if (!container || !touch) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            const mouseX = touch.clientX - containerRect.left;
+            const mouseY = touch.clientY - containerRect.top;
+            
+            // Mover en dirección opuesta al toque
+            const buttonRect = noBtn.getBoundingClientRect();
+            const buttonCenterX = buttonRect.left - containerRect.left + buttonRect.width/2;
+            const buttonCenterY = buttonRect.top - containerRect.top + buttonRect.height/2;
+            
+            const angle = Math.atan2(buttonCenterY - mouseY, buttonCenterX - mouseX);
+            const distance = 60;
+            
+            let newX = currentX + Math.cos(angle) * distance;
+            let newY = currentY + Math.sin(angle) * distance;
+            
+            // Limitar dentro del contenedor
+            const maxX = containerRect.width - buttonRect.width - 10;
+            const maxY = containerRect.height - buttonRect.height - 10;
+            
+            newX = Math.max(10, Math.min(newX, maxX));
+            newY = Math.max(10, Math.min(newY, maxY));
+            
+            // Aplicar movimiento
+            noBtn.style.transition = 'all 0.2s ease';
+            noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
             
             // Vibrar si es posible
-            if (navigator.vibrate) navigator.vibrate([30, 30, 30]);
+            if (navigator.vibrate) navigator.vibrate([20]);
+            
+            setTimeout(() => {
+                isEscaping = false;
+            }, 200);
+            
+            currentX = newX;
+            currentY = newY;
         }
 
-        function moverAleatoriamente() {
-            if (!escapeMode) return;
+        function moverAleatoriamenteSeguro() {
+            if (!escapeMode || isEscaping) return;
             
             const container = document.querySelector('.buttons-container');
             if (!container) return;
@@ -979,7 +1172,7 @@
             const buttonWidth = noBtn.offsetWidth;
             const buttonHeight = noBtn.offsetHeight;
             
-            // Nueva posición aleatoria
+            // Nueva posición aleatoria (dentro de límites)
             const maxX = containerRect.width - buttonWidth - 20;
             const maxY = containerRect.height - buttonHeight - 20;
             
@@ -987,8 +1180,24 @@
             const newY = Math.random() * maxY;
             
             // Movimiento suave
-            noBtn.style.transition = 'all 0.4s ease';
+            noBtn.style.transition = 'all 0.8s ease';
             noBtn.style.transform = `translate(${newX}px, ${newY}px)`;
+            
+            currentX = newX;
+            currentY = newY;
+        }
+
+        function escaparDeFoco() {
+            if (!escapeMode) return;
+            
+            // Mover a posición aleatoria cuando se enfoca con tab
+            moverAleatoriamenteSeguro();
+            
+            // Quitar el foco inmediatamente
+            setTimeout(() => {
+                noBtn.blur();
+                if (yesBtn) yesBtn.focus();
+            }, 10);
         }
 
         function manejarIntentoClicNo(e) {
@@ -1176,10 +1385,12 @@
 
         // ============ MEJORAS RESPONSIVE ============
         window.addEventListener('resize', function() {
-            // Si el botón No estaba posicionado absolutamente, resetearlo
-            if (noBtn.style.position === 'absolute') {
+            // Resetear posición si hay problemas
+            if (noBtn.style.transform.includes('translate') && 
+                (noBtn.offsetLeft + noBtn.offsetWidth > document.querySelector('.buttons-container').offsetWidth)) {
                 noBtn.style.transform = 'translate(0, 0)';
-                noBtn.style.position = 'relative';
+                currentX = 0;
+                currentY = 0;
             }
         });
 
@@ -1195,10 +1406,7 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Tab' && document.activeElement === noBtn) {
                 e.preventDefault();
-                escapeUltraRapido({
-                    clientX: window.innerWidth / 2,
-                    clientY: window.innerHeight / 2
-                });
+                escaparDeFoco();
             }
             
             // Acceso rápido a SÍ con Enter
